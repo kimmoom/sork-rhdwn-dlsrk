@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>나의 전생 테스트</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: sans-serif;
+    overflow: hidden;
+    text-align: center;
+    transition: background-color 0.5s ease;
+  }
+
+  /* 시작 화면 */
+  #startScreen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(90deg, #ffc1e3, #ffd8b2, #fff7c1, #c1ffc1, #c1ffff, #c1d4ff, #e0c1ff);
+    background-size: 1400% 100%;
+    animation: rainbowBG 10s linear infinite;
+    box-sizing: border-box;
+    padding: 2vw;
+  }
+
+  @keyframes rainbowBG {
+    0% {background-position: 0% 0%;}
+    100% {background-position: 100% 0%;}
+  }
+
+  #startScreen h1 {
+    font-size: 6vw;
+    color: #fff;
+    margin-bottom: 3vh;
+  }
+
+  #startScreen img {
+    width: 60vw;
+    max-width: 300px;
+    height: auto;
+    margin-bottom: 3vh;
+  }
+
+  #startScreen button {
+    padding: 2vw 4vw;
+    font-size: 4vw;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: #fff59d;
+    font-weight: bold;
+  }
+
+  /* 질문 영역 */
+  .question {
+    display: none;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 2vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2vh;
+  }
+
+  .question button {
+    margin: 10px 20px;
+    padding: 2vh 4vw;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    border-radius: 20px;
+    background-color: #fff59d;
+    color: #333;
+    font-weight: bold;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+    transition: all 0.2s ease;
+z-index: 10;
+  }
+
+  .question button:hover {
+    background-color: #fff176;
+    transform: scale(1.05);
+  }
+
+  /* 하단 벽돌 길 */
+  #track {
+    position: absolute;
+    bottom: 5vh;
+    left: 0;
+    width: 100%;
+    height: 3vh;
+    background-color: #b5651d;
+    border-radius: 5px;
+    display: none;
+  }
+
+  /* 토끼 이미지 */
+  #rabbit {
+    position: absolute;
+    bottom: 5vh;
+    left: 0;
+    width: 8vw;
+    max-width: 50px;
+    transition: left 0.5s ease-in-out;
+    display: none;
+z-index: 0;
+  }
+
+  /* 결과 화면 */
+  #result {
+    display: none;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 2vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2vh;
+  }
+
+  #result p:first-child {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0;
+    word-break: keep-all;
+  }
+
+  #result img {
+    max-width: 80%;
+    max-height: 60%;
+    height: auto;
+    margin-top: 3vh;
+    border-radius: 0;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- 시작 화면 -->
+<div id="startScreen">
+  <h1>🔮 나의 전생 테스트 🔮</h1>
+  <img src="IMG_2851.png" alt="시작 이미지">
+  <button onclick="startQuiz()">시작</button>
+</div>
+
+<!-- 하단 벽돌 길 -->
+<div id="track"></div>
+
+<!-- 토끼 이미지 -->
+<img id="rabbit" src="IMG_2760.png" alt="토끼">
+
+<!-- 질문 예시 -->
+<h2>🔮 나의 전생 테스트 🔮</h2>
+
+<!-- Q1 ~ Q10 -->
+<div class="question" id="q1">
+  <p>Q1. 신호등이 3초 남았는데 내가 탈 버스가 와있다면?</p>
+  <button onclick="answer(1)">다른 경로를 찾아본다</button>
+  <button onclick="answer(2)">다음 신호를 기다린다</button>
+  <button onclick="answer(3)">당장 뛰어서 길을 건넌다</button>
+</div>
+
+<div class="question" id="q2">
+  <p>Q2. 지금 가장 필요한 건?</p>
+  <button onclick="answer(1)">돈</button>
+  <button onclick="answer(2)">휴식</button>
+  <button onclick="answer(3)">사랑</button>
+</div>
+
+<div class="question" id="q3">
+  <p>Q3. 무인도에 딱 한 개만 가져가면?</p>
+  <button onclick="answer(1)">총</button>
+  <button onclick="answer(2)">라이터</button>
+  <button onclick="answer(3)">친구</button>
+</div>
+
+<div class="question" id="q4">
+  <p>Q4. 소꿉놀이에서 하고싶은 역할은?</p>
+  <button onclick="answer(1)">아빠</button>
+  <button onclick="answer(2)">엄마</button>
+  <button onclick="answer(3)">아기</button>
+</div>
+
+<div class="question" id="q5">
+  <p>Q5. 내가 죽는다면?</p>
+  <button onclick="answer(1)">하늘</button>
+  <button onclick="answer(2)">바다</button>
+  <button onclick="answer(3)">초원</button>
+</div>
+
+<div class="question" id="q6">
+  <p>Q6. 외계인을 만났다면?</p>
+  <button onclick="answer(1)">신고한다</button>
+  <button onclick="answer(2)">인사한다</button>
+  <button onclick="answer(3)">셀카 찍는다</button>
+</div>
+
+<div class="question" id="q7">
+  <p>Q7. 학창시절 가장 마음에 드는 복장은?</p>
+  <button onclick="answer(1)">교복</button>
+  <button onclick="answer(2)">사복</button>
+  <button onclick="answer(3)">체육복</button>
+</div>
+
+<div class="question" id="q8">
+  <p>Q8. 친구들과 놀러갈 때 딱 한가지만 챙겨야한다면?</p>
+  <button onclick="answer(1)">핸드폰</button>
+  <button onclick="answer(2)">칫솔</button>
+  <button onclick="answer(3)">보드게임</button>
+</div>
+
+<div class="question" id="q9">
+  <p>Q9. 지금 나가야되는데 양말에 구멍난 걸 발견했다면?</p>
+  <button onclick="answer(1)">양말을 버린다</button>
+  <button onclick="answer(2)">꿰맨다</button>
+  <button onclick="answer(3)">그냥 신고 나간다</button>
+</div>
+
+<div class="question" id="q10">
+  <p>Q10. 삶을 바꿔야 한다면?</p>
+  <button onclick="answer(1)">일론머스크</button>
+  <button onclick="answer(2)">차은우</button>
+  <button onclick="answer(3)">아직 태어나지 않은 세포</button>
+</div>
+
+<div class="question" id="q11">
+<p>Q11. 셋 중 한 가지에 탑승할 수 있다면?</p>
+  <button onclick="answer(1)">종이비행기</button>
+  <button onclick="answer(2)">종이배</button>
+  <button onclick="answer(3)">종이개구리</button>
+</div>
+
+<div class="question" id="q12">
+<p>Q12. 점심시간, 단 한 가지만 받을 수 있다면?</p>
+  <button onclick="answer(1)">밥</button>
+  <button onclick="answer(2)">국</button>
+  <button onclick="answer(3)">반찬</button>
+</div>
+
+<div class="question" id="q13">
+<p>Q13. 셋 중 하나를 먹어야 한다면?</p>
+  <button onclick="answer(1)">김 빠진 콜라</button>
+  <button onclick="answer(2)">김 빠진 김밥</button>
+  <button onclick="answer(3)">김 빠진 아메리카노</button>
+</div>
+
+<div class="question" id="q14">
+<p>Q14. 나의 완벽한 애인(최애를 떠올리세요)이 셋 중 하나로 변한다면?</p>
+  <button onclick="answer(1)">사자꼬리가 달린 애인</button>
+  <button onclick="answer(2)">발이 닭발로 변한 애인</button>
+  <button onclick="answer(3)">머리가 타코야끼로 변한 애인</button>
+</div>
+
+
+<!-- 결과 화면 -->
+<div id="result"></div>
+
+<script>
+let totalScore = 0;
+let currentQ = 1;
+const lastQ = 14;
+let rabbitStep = 0;
+
+// 질문별 배경색
+const bgColors = [
+  "#ffc1e3", "#c1ffc1", "#c1d4ff", "#fff7c1",
+  "#ffc8c1", "#e0c1ff", "#c1ffff", "#ffd8c1",
+  "#f0f0f0", "#ffe0b2", "#b3e5fc", "#fff9c4",
+  "#f8bbd0", "#dcedc8"
+];
+
+// 시작 버튼 클릭
+function startQuiz() {
+  document.getElementById("startScreen").style.display = "none";
+  const firstQ = document.getElementById("q1");
+  if(firstQ) firstQ.style.display = "flex";
+  document.getElementById("track").style.display = "block";
+  document.getElementById("rabbit").style.display = "block";
+  document.body.style.backgroundColor = bgColors[0];
+}
+
+// 토끼 이동
+function moveRabbitStep() {
+  const rabbit = document.getElementById("rabbit");
+  const track = document.getElementById("track");
+  const trackWidth = track.offsetWidth - rabbit.offsetWidth;
+  const stepDistance = trackWidth / lastQ;
+  rabbitStep++;
+  rabbit.style.left = (stepDistance * rabbitStep) + "px";
+}
+
+// 답변 선택
+function answer(score) {
+  totalScore += score;
+  const current = document.getElementById("q"+currentQ);
+  if(current) current.style.display = "none";
+  currentQ++;
+
+  moveRabbitStep();
+
+  if(currentQ <= lastQ){
+    const nextQ = document.getElementById("q"+currentQ);
+    if(nextQ) nextQ.style.display = "flex";
+    document.body.style.backgroundColor = bgColors[currentQ-1];
+  } else {
+    setTimeout(showResult, 50);
+  }
+}
+
+// 결과 화면
+function showResult() {
+  document.getElementById("track").style.display = "none";
+  document.getElementById("rabbit").style.display = "none";
+
+  let resultText = "";
+  let imageSrc = "";
+
+  if (totalScore >= 14 && totalScore <= 16) { resultText = "문어"; imageSrc = "moon.jpeg"; }
+  else if (totalScore >= 17 && totalScore <= 19) { resultText = "돼지"; imageSrc = "pig.jpeg"; }
+  else if (totalScore >= 20 && totalScore <= 23) { resultText = "강아지"; imageSrc = "dog.jpeg"; }
+  else if (totalScore >= 24 && totalScore <= 28) { resultText = "오리"; imageSrc = "duck.jpeg"; }
+  else if (totalScore >= 29 && totalScore <= 33) { resultText = "도마뱀"; imageSrc = "mabam.jpeg"; }
+  else if (totalScore >= 34 && totalScore <= 36) { resultText = "불가사리"; imageSrc = "starfish.jpeg"; }
+  else if (totalScore >= 37 && totalScore <= 39) { resultText = "애벌레"; imageSrc = "larva.jpeg"; }
+  else if (totalScore >= 40 && totalScore <= 42) { resultText = "돌멩이"; imageSrc = "stone.jpeg"; }
+
+  const resultDiv = document.getElementById("result");
+  resultDiv.style.display = "flex";
+  resultDiv.innerHTML = `
+    <p>당신의 전생은?: ${resultText}</p>
+    <img src="${imageSrc}" alt="${resultText}">
+  `;
+  document.body.style.backgroundColor = "#ffe0b2";
+}
+</script>
+
+</body>
+</html>
