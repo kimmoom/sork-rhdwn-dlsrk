@@ -16,7 +16,7 @@
     transition: background-color 0.5s ease;
   }
 
-  /* 시작 화면 */
+
   #startScreen {
     width: 100%;
     height: 100%;
@@ -59,7 +59,7 @@
     font-weight: bold;
   }
 
-  /* 질문 영역 */
+  
   .question {
     display: none;
     width: 100%;
@@ -93,7 +93,7 @@ z-index: 10;
     transform: scale(1.05);
   }
 
-  /* 하단 벽돌 길 */
+  
   #track {
     position: absolute;
     bottom: 5vh;
@@ -105,7 +105,7 @@ z-index: 10;
     display: none;
   }
 
-  /* 토끼 이미지 */
+
   #rabbit {
     position: absolute;
     bottom: 5vh;
@@ -117,7 +117,7 @@ z-index: 10;
 z-index: 0;
   }
 
-  /* 결과 화면 */
+  
   #result {
     display: none;
     width: 100%;
@@ -150,20 +150,20 @@ z-index: 0;
 </head>
 <body>
 
-<!-- 시작 화면 -->
+
 <div id="startScreen">
   <h1>🔮 나의 전생 테스트 🔮</h1>
   <img src="IMG_2851.png" alt="시작 이미지">
   <button onclick="startQuiz()">시작</button>
 </div>
 
-<!-- 하단 벽돌 길 -->
+
 <div id="track"></div>
 
-<!-- 토끼 이미지 -->
+
 <img id="rabbit" src="IMG_2760.png" alt="토끼">
 
-<!-- 질문 예시 -->
+
 <h2>🔮 나의 전생 테스트 🔮</h2>
 
 <!-- Q1 ~ Q10 -->
@@ -266,7 +266,7 @@ z-index: 0;
 </div>
 
 
-<!-- 결과 화면 -->
+
 <div id="result"></div>
 
 <script>
@@ -275,7 +275,7 @@ let currentQ = 1;
 const lastQ = 14;
 let rabbitStep = 0;
 
-// 질문별 배경색
+
 const bgColors = [
   "#ffc1e3", "#c1ffc1", "#c1d4ff", "#fff7c1",
   "#ffc8c1", "#e0c1ff", "#c1ffff", "#ffd8c1",
@@ -283,7 +283,7 @@ const bgColors = [
   "#f8bbd0", "#dcedc8"
 ];
 
-// 시작 버튼 클릭
+
 function startQuiz() {
   document.getElementById("startScreen").style.display = "none";
   const firstQ = document.getElementById("q1");
@@ -293,7 +293,7 @@ function startQuiz() {
   document.body.style.backgroundColor = bgColors[0];
 }
 
-// 토끼 이동
+
 function moveRabbitStep() {
   const rabbit = document.getElementById("rabbit");
   const track = document.getElementById("track");
@@ -303,7 +303,7 @@ function moveRabbitStep() {
   rabbit.style.left = (stepDistance * rabbitStep) + "px";
 }
 
-// 답변 선택
+
 function answer(score) {
   totalScore += score;
   const current = document.getElementById("q"+currentQ);
@@ -321,7 +321,7 @@ function answer(score) {
   }
 }
 
-// 결과 화면
+
 function showResult() {
   document.getElementById("track").style.display = "none";
   document.getElementById("rabbit").style.display = "none";
@@ -350,3 +350,4 @@ function showResult() {
 
 </body>
 </html>
+
